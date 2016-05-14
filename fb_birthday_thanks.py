@@ -22,8 +22,10 @@ args = {'since' : birthdate_unix_timestamp, 'limit': 500}
 birthday_posts = graph.get_connections('me', 'feed', **args)
 
 for birthday_post in birthday_posts['data']:
-    comment = choice(thankyou_comments)
-    graph.put_object(birthday_post['id'], 'likes')
-    graph.put_object(birthday_post['id'], 'comments', message = comment)
+    for birthday_keyword in birthday_keywords:
+        if birthday_keyword in birthday_post['message']:
+            comment = choice(thankyou_comments)
+            graph.put_object(birthday_post['id'], 'likes')
+            graph.put_object(birthday_post['id'], 'comments', message = comment)
 
 
